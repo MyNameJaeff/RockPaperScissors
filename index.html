@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .all{
+            margin-left: auto;
+            margin-right: auto;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .gameScreen{
+            background-color: azure;
+            border: 4px solid black;
+            height: 200px;
+            display: flex;
+        }
+        .vl{
+            border-left: 4px solid black;
+        }
+        .dator{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 350px;
+        }
+        .spelare{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 350px;
+        }
+        .buttons{
+            margin-top: 20%;
+            width: 400px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+        button{
+            height: 30px;
+            width: 100px;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+        }
+        .scores{
+            margin-top: 15%;
+            width: 800px;
+            display: inline-flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body onload="randomizeNumber()"> <!--Börjar med att ge ett nummer-->
+    <div class="all">
+        <h2 id="winner">Winner: </h1>
+        <div class="gameScreen" id="gameScreen">
+            <div class="dator">
+                <h2>Dator</h1>
+                <img src="empty.png" id="computerImg">
+            </div>
+            <div class="vl" id="vl"></div>
+            <div class="spelare">
+                <h1>Du</h1>
+                <img src="empty.png" id="playerImg">
+            </div>
+        </div>
+        <div class="buttons">
+            <button id="sten" onclick="rockPaperSiscor(1)">Sten</button>
+            <button id="sax" onclick="rockPaperSiscor(2)">Sax</button>
+            <button id="påse" onclick="rockPaperSiscor(3)">Påse</button>
+        </div>
+        <div class="scores">
+            <h2>Computer wins:<span id="computerWins">&nbsp0</span></h2>
+            <h2>Ties:<span id="ties">&nbsp0</span></h2>
+            <h2>Player wins:<span id="playerWins">&nbsp0</span></h2>
+            <button onclick="clearScores()" class="clear">Clear scores</button>
+        </div>
+    </div>
+    <script>
+        let wins = 0; let losses = 0; let ties = 0;
+        function randomizeNumber(){ //Funktion för att ge random nummer mellan 1-6
+            return 1 + Math.trunc(Math.random() * 3);
+        }
+        function clearScores(){
+            wins = 0; losses = 0; ties = 0;
+            document.getElementById("computerWins").innerHTML = "&nbsp"+losses
+            document.getElementById("ties").innerHTML = "&nbsp"+ties
+            document.getElementById("playerWins").innerHTML = "&nbsp"+wins
+        }
+        function rockPaperSiscor(number){
+            let pictures = ["","sten.png", "sax.png", "påse.png"]
+            let enemyNumber = randomizeNumber();
+            document.getElementById("computerImg").src = pictures[enemyNumber]
+            document.getElementById("playerImg").src = pictures[number]
+            if((enemyNumber == 1 && number == 2) || (enemyNumber == 2 && number == 3) || (enemyNumber == 3 && number == 1)){
+                document.getElementById("gameScreen").style.borderColor = "red";
+                document.getElementById("vl").style.borderColor = "red";
+                document.getElementById("winner").innerHTML = "Computer won";
+                console.log(enemyNumber, number, "red"); losses++;
+            }
+            else if(enemyNumber == number){
+                document.getElementById("gameScreen").style.borderColor = "yellow";
+                document.getElementById("vl").style.borderColor = "yellow";
+                document.getElementById("winner").innerHTML = "TIE";
+                console.log(enemyNumber, number, "black"); ties++;
+            }
+            else{
+                document.getElementById("gameScreen").style.borderColor = "green";
+                document.getElementById("vl").style.borderColor = "green";
+                document.getElementById("winner").innerHTML = "Player won";
+                console.log(enemyNumber, number, "green"); wins++;
+            }
+            document.getElementById("computerWins").innerHTML = "&nbsp"+losses
+            document.getElementById("ties").innerHTML = "&nbsp"+ties
+            document.getElementById("playerWins").innerHTML = "&nbsp"+wins
+        }
+    </script>
+</body>
+</html>
